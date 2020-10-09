@@ -1,8 +1,9 @@
 // Goal: Take in an image element and use canvas to draw the image with various effects
 var drawImage = new function () {
     this.configurations = {
-        baseCircleSize: 20,
-        minCircleSize: 2
+        circleSize: .2,
+        minCircleSize: .01,
+        circleCount: 1
     }
 
     this.circleDraw = function (imageEl) {
@@ -31,15 +32,21 @@ var drawImage = new function () {
     }
 
     this.animationLoop = function () {
-        var randomX = Math.floor(Math.random()*this.imageEl.width);
-        var randomY = Math.floor(Math.random()*this.imageEl.height);
-        for (var i = 0; i < 20; i++) {            
+
+        var imageSize = this.imageEl.width * this.configurations.circleSize;
+        var circleAlpha = (this.configurations.minCircleSize / this.configurations.circleSize) *.5;
+        if (this.configurations.circleSize >= this.configurations.minCircleSize){
+            this.configurations.circleSize *= .99;
+        }
+        this.ctx.globalAlpha = circleAlpha;
+        for (var i = 0; i < 20; i++) {
+            var randomX = Math.floor(Math.random() * this.imageEl.width);
+            var randomY = Math.floor(Math.random() * this.imageEl.height);
             var pixelColor = this.imageCanvasCtx.getImageData(randomX, randomY, 1, 1).data;
-            this.ctx.fillStyle = "rgba(" + pixelColor[0] + "," + pixelColor[1] + ", " + pixelColor[2] + ", .2)";
+            this.ctx.fillStyle = "rgb(" + pixelColor[0] + "," + pixelColor[1] + ", " + pixelColor[2] + ")";
             this.ctx.beginPath();
-            this.ctx.arc(randomX, randomY, 8, 0, 2*Math.PI);
-            this.ctx.fill();
-            //this.ctx.fillRect(randomX, randomY, 20, 20);
+            this.ctx.arc(randomX, randomY, imageSize, 0, 2 * Math.PI);
+            this.ctx.fill();           
         }
         window.requestAnimationFrame(this.animationLoop.bind(this));
     }
@@ -63,6 +70,7 @@ var drawImage = new function () {
 
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
+        
     }
 
     this.drawCanvas = function () {
