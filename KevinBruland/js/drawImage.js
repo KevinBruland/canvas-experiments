@@ -1,5 +1,4 @@
 // Goal: Take in an image element and use canvas to draw the image with various effects
-
 var drawImage = new function () {
     this.circleDraw = function (imageEl) {
         var that = this;
