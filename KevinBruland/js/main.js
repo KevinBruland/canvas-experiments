@@ -1,0 +1,1 @@
+drawImage.circleDraw(document.getElementById('canvasCircleImage'));
