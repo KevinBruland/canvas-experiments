@@ -1,1 +1,3 @@
-drawImage.circleDraw(document.getElementById('canvasCircleImage'));
+var testImage = document.getElementById('canvasCircleImage')
+
+drawImage.circleDraw(testImage);
