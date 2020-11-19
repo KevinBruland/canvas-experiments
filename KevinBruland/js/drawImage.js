@@ -2,12 +2,10 @@
 var drawImage = new function () {
     this.configurations = {
         circleSize: .2,
-        minCircleSize: .01,
-        circleCount: 1
+        minCircleSize: .005,
     }
 
-    this.circleDraw = function (imageEl) {
-        var that = this;
+    this.circleDraw = function (imageEl) {        
         this.imageEl = imageEl;
         this.checkIfImageLoaded();
     }
@@ -39,7 +37,8 @@ var drawImage = new function () {
             this.configurations.circleSize *= .99;
         }
         this.ctx.globalAlpha = circleAlpha;
-        for (var i = 0; i < 20; i++) {
+        
+        for (var i = 0; i < 500; i++) {
             var randomX = Math.floor(Math.random() * this.imageEl.width);
             var randomY = Math.floor(Math.random() * this.imageEl.height);
             var pixelColor = this.imageCanvasCtx.getImageData(randomX, randomY, 1, 1).data;
@@ -48,6 +47,8 @@ var drawImage = new function () {
             this.ctx.arc(randomX, randomY, imageSize, 0, 2 * Math.PI);
             this.ctx.fill();           
         }
+
+        
         window.requestAnimationFrame(this.animationLoop.bind(this));
     }
 
@@ -71,10 +72,6 @@ var drawImage = new function () {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         
-    }
-
-    this.drawCanvas = function () {
-        this.ctx.fillRect(0, 0, 150, 100);
     }
 
     this.appendCanvas = function () {
